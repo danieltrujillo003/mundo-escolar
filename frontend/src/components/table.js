@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+
 
 class Table extends Component {
   constructor(props) {
@@ -48,24 +50,27 @@ class Table extends Component {
           </tr>
         </thead>
         <tbody>
-          {/* {this.state.articles.map((article, i) => (
+          {this.props.articles.map((article, i) => (
             <tr key={i}>
-              <td>{article.nombre}</td>
-              <td>{article.iva}</td>
-              <td>{article.clasificadores}</td>
-              <td>{article.retefuente}</td>
-              <td>{article.tipo_adquirido}</td>
-              <td>{article.unidades_medida}</td>
-              <td>{article.notas}</td>
+              <td>{article.articulo}</td>
+              <td>{article.cantidad}</td>
               <td>
                 <button onClick={() => this.deleteArticle(article.id)}>Eliminar</button>
               </td>
             </tr>
-          ))} */}
+          ))}
         </tbody>
       </table>
     );
   }
 }
 
-export default Table;
+const mapStateToProps = state => ({
+  articles: state.articles.listaArticulos
+});
+
+// const mapDispatchToProps = dispatch => {
+//   return bindActionCreators({ ...fieldsActions, addArticles }, dispatch);
+// };
+
+export default connect(mapStateToProps)(Table);

@@ -1,49 +1,115 @@
 import React, { Component } from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
-class Dropdown extends Component {
+import * as fieldsActions from "../actions/fieldsActions";
+
+class ArticleForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      table: this.props.table,
-      tableContent: [],
-      price: this.props.price
+      cliente: "",
+      articulo: "",
+      cantidad: ""
     };
+    // this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
-  infoFetch() {
-    const url = `http://localhost:3000/${this.state.table}`;
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        this.setState({
-          tableContent: data.info
-        });
-      })
-      .catch(err => console.log(err));
+
+  // handleSubmit(e) {
+  //   const {
+  //     cliente,
+  //     articulo,
+  //     cantidad
+  //   } = this.state;
+
+  //   const newArticle = {
+  //     nombre,
+  //     unidades_medida,
+  //     clasificadores,
+  //     iva,
+  //     retefuente,
+  //     tipo_adquirido,
+  //     notas
+  //   }
+
+  //   console.log(newArticle)
+
+  //   e.preventDefault();
+    
+  //   this.props.postNewArticle(newArticle);
+  // }
+
+  handleChange(e) {
+    const { name, value } = e.target;
+    name === "clientes"
+      ? this.setState({ cliente: value })
+      : name === "articulos"
+      ? this.setState({ articulo: value })
+      : this.setState({ cantidad: value });
   }
-  componentWillMount() {
-    this.infoFetch();
-    this.setState({price: this.state.tableContent.precio})
+  componentDidMount() {
+    const {
+      fetchArticulos,
+      fetchClientes
+    } = this.props;
+
+    fetchArticulos();
+    fetchClientes();
   }
 
   render() {
     return (
-      <div>
-        <label htmlFor={this.props.table}>{this.props.label}:</label>
-        <select
-          id={this.props.table}
-          name={this.props.table}
-          onChange={this.props.ev}
-          hey="heyy"
-        >
-          <option>Seleccione...</option>
-          {this.state.tableContent.map((content, i) => (
-            <option key={i}>{content.main}</option>
-          ))}
-        </select>
-        <a href="#">editar</a>
-      </div>
+      <form onSubmit={this.handleSubmit}>
+        <div>
+          <label htmlFor="clientes">Cliente:</label>
+          <select name="clientes" id="clientes">
+            <option>Seleccione...</option>
+            {this.props.valuesClientes.map((content, i) => (
+              <option key={i}>{content.main}</option>
+            ))}
+          </select>
+          <a href="#">editar</a>
+        </div>
+        <div>
+          <label htmlFor="articulos">Grupo:</label>
+          <select name="articulos" id="articulos">
+            <option>Seleccione...</option>
+            {this.props.valuesArticulos.map((content, i) => (
+              <option key={i}>{content.main}</option>
+            ))}
+          </select>
+          <a href="#">editar</a>
+        </div>
+        Cantidad:
+        <input
+          name="Cantidad"
+          type="number"
+          min="0"
+          onChange={this.handleChange}
+        />
+        <br />
+        <input type="submit" value="Agregar" />
+      </form>
     );
   }
 }
 
-export default Dropdown;
+const mapStateToProps = state => {
+  const {
+    valuesArticulos,
+    valuesClientes
+  } = state.fields;
+
+  return {
+    valuesArticulos,
+    valuesClientes
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ ...fieldsActions }, dispatch);
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ArticleForm);

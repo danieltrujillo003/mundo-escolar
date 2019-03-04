@@ -3,7 +3,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
 import * as fieldsActions from "../actions/fieldsActions";
-import {addArticles} from "../actions/articlesActions";
+import { addArticles } from "../actions/articlesActions";
 
 class ArticleForm extends Component {
   constructor(props) {
@@ -20,19 +20,15 @@ class ArticleForm extends Component {
 
   handleArticleSubmit(e) {
     e.preventDefault();
-    const {
-      cliente,
-      articulo,
-      cantidad
-    } = this.state;
+    const { cliente, articulo, cantidad } = this.state;
 
     const nuevoArticulo = {
       cliente,
       articulo,
       cantidad
-    }
+    };
 
-    addArticles(nuevoArticulo)
+    addArticles(nuevoArticulo);
   }
 
   // handleSubmit(e) {
@@ -55,23 +51,16 @@ class ArticleForm extends Component {
   //   console.log(newArticle)
 
   //   e.preventDefault();
-    
+
   //   this.props.postNewArticle(newArticle);
   // }
 
   handleChange(e) {
     const { name, value } = e.target;
-    name === "clientes"
-      ? this.setState({ cliente: value })
-      : name === "articulos"
-      ? this.setState({ articulo: value })
-      : this.setState({ cantidad: value });
+    this.setState({ [name]: value });
   }
   componentDidMount() {
-    const {
-      fetchArticulos,
-      fetchClientes
-    } = this.props;
+    const { fetchArticulos, fetchClientes } = this.props;
 
     fetchArticulos();
     fetchClientes();
@@ -81,8 +70,8 @@ class ArticleForm extends Component {
     return (
       <form onSubmit={this.handleArticleSubmit}>
         <div>
-          <label htmlFor="clientes">Cliente:</label>
-          <select name="clientes" id="clientes" onChange={this.handleChange}>
+          <label htmlFor="cliente">Cliente:</label>
+          <select name="cliente" id="cliente" onChange={this.handleChange}>
             <option>Seleccione...</option>
             {this.props.valuesClientes.map((content, i) => (
               <option key={i}>{content.main}</option>
@@ -91,8 +80,8 @@ class ArticleForm extends Component {
           <a href="#">editar</a>
         </div>
         <div>
-          <label htmlFor="articulos">Artículo:</label>
-          <select name="articulos" id="articulos" onChange={this.handleChange}>
+          <label htmlFor="articulo">Artículo:</label>
+          <select name="articulo" id="articulo" onChange={this.handleChange}>
             <option>Seleccione...</option>
             {this.props.valuesArticulos.map((content, i) => (
               <option key={i}>{content.main}</option>
@@ -102,7 +91,7 @@ class ArticleForm extends Component {
         </div>
         Cantidad:
         <input
-          name="Cantidad"
+          name="cantidad"
           type="number"
           min="0"
           onChange={this.handleChange}
@@ -115,10 +104,7 @@ class ArticleForm extends Component {
 }
 
 const mapStateToProps = state => {
-  const {
-    valuesArticulos,
-    valuesClientes
-  } = state.fields;
+  const { valuesArticulos, valuesClientes } = state.fields;
 
   return {
     valuesArticulos,

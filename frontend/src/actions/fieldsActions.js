@@ -1,6 +1,7 @@
 import {
   FETCH_ARTICULOS,
-  FETCH_CLIENTES
+  FETCH_CLIENTES,
+  LIST_ARTICLES
 } from "./types";
 
 export const fetchArticulos = () => dispatch => {
@@ -28,3 +29,8 @@ export const fetchClientes = () => dispatch => {
       })
       .catch(err => console.log(err));
 };
+
+export const addArticles = nuevoArticulo => ({
+  type: LIST_ARTICLES,
+  payload: nuevoArticulo
+});

@@ -1,24 +1,18 @@
 const pg = require("pg");
-const { Pool, Client } = pg;
+const { Client } = pg;
 
 const connectionString =
   "postgres://EscolarSuperUser:escolarpass@localhost/escolar";
 
 const getInfo = (req, res) => {
-  const pool = new Pool({
-    connectionString: connectionString
-  });
-  pool.query("SELECT NOW()", (err, res) => {
-    console.log("pool->", err, res.rows);
-    pool.end();
-  });
   const client = new Client({
-    connectionString: connectionString
+    connectionString
   });
   client.connect();
+
   client.query(`SELECT * FROM ${req.params.table}`, (err, result) => {
     if (err) {
-      res.status(500).send({ error: err });
+      res.status(500).send({ err });
       client.end();
     } else {
       res.send({ info: result.rows });
@@ -28,13 +22,6 @@ const getInfo = (req, res) => {
 };
 
 const deleteInfo = (req, res) => {
-  const pool = new Pool({
-    connectionString
-  });
-  pool.query("SELECT NOW()", (err, res) => {
-    console.log("pool->", err, res.rows);
-    pool.end();
-  });
   const client = new Client({
     connectionString
   });
@@ -50,31 +37,22 @@ const deleteInfo = (req, res) => {
 };
 
 const addInfo = (req, res) => {
-  const pool = new Pool({
-    connectionString: connectionString
-  });
-  pool.query("SELECT NOW()", (err, res) => {
-    console.log("pool->", err, res.rows);
-    pool.end();
-  });
   const client = new Client({
-    connectionString: connectionString
-    });
-    client.connect();
-                      req.body.map(article => {
-    client.query(
-      "INSERT INTO pedidos(codigo_cliente, codigo_articulo, cantidad) VALUES($1, $2, $3)",
-      [article.cliente, article.articulo, article.cantidad],
-      (err, result) => {
-        if (err) {
-          res.status(500).send({ err });
-        } else {
-          res.send({ message: `Artículo agregado` });
-        }
-        client.end();
-      }
-    );
+    connectionString
   });
+  client.connect();
+  try {
+    req.body.map(article => {
+      client.query(
+        "INSERT INTO pedidos(codigo_cliente, codigo_articulo, cantidad) VALUES($1, $2, $3)",
+        [article.cliente, article.articulo, article.cantidad]
+      );
+    });
+    res.send({ message: `Artículo agregado` });
+  } catch (error) {
+    res.status(500).send({ error });
+  }
+  client.end();
 };
 
 module.exports = { getInfo, deleteInfo, addInfo };

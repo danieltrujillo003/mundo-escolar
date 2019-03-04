@@ -3,7 +3,6 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
 import * as fieldsActions from "../actions/fieldsActions";
-import { addArticles } from "../actions/articlesActions";
 
 class ArticleForm extends Component {
   constructor(props) {
@@ -28,7 +27,7 @@ class ArticleForm extends Component {
       cantidad
     };
 
-    addArticles(nuevoArticulo);
+    this.props.addArticles(nuevoArticulo);
   }
 
   // handleSubmit(e) {
@@ -112,7 +111,7 @@ const mapStateToProps = state => {
   };
 };
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ ...fieldsActions, addArticles }, dispatch);
+  return bindActionCreators({ ...fieldsActions }, dispatch);
 };
 export default connect(
   mapStateToProps,

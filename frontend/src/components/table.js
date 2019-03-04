@@ -50,7 +50,7 @@ class Table extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.articles.map((article, i) => (
+          {/* {this.props.articles.map((article, i) => (
             <tr key={i}>
               <td>{article.articulo}</td>
               <td>{article.cantidad}</td>
@@ -58,7 +58,7 @@ class Table extends Component {
                 <button onClick={() => this.deleteArticle(article.id)}>Eliminar</button>
               </td>
             </tr>
-          ))}
+          ))} */}
         </tbody>
       </table>
     );
@@ -66,7 +66,7 @@ class Table extends Component {
 }
 
 const mapStateToProps = state => ({
-  articles: state.articles.listaArticulos
+  articles: state.fields.listaArticulos
 });
 
 // const mapDispatchToProps = dispatch => {

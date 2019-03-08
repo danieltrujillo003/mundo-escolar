@@ -10,7 +10,8 @@ class ArticleForm extends Component {
     this.state = {
       cliente: "",
       articulo: "",
-      cantidad: ""
+      cantidad: "",
+      counter: 0
     };
     // this.handleSubmit = this.handleSubmit.bind(this);
     this.handleArticleSubmit = this.handleArticleSubmit.bind(this);
@@ -20,14 +21,16 @@ class ArticleForm extends Component {
   handleArticleSubmit(e) {
     e.preventDefault();
     const { cliente, articulo, cantidad } = this.state;
-
+    const precio = this.props.valuesArticulos.find(el => el.main == articulo)
+      .precio;
     const nuevoArticulo = {
       cliente,
       articulo,
-      cantidad
+      cantidad,
+      precio
     };
-
     this.props.addArticles(nuevoArticulo);
+    this.setState({counter: this.state.counter + 1})
   }
 
   // handleSubmit(e) {
@@ -57,10 +60,13 @@ class ArticleForm extends Component {
   handleChange(e) {
     const { name, value } = e.target;
     this.setState({ [name]: value });
+    if (name === "cliente") {
+      this.props.addTitle(value);
+    }
   }
+
   componentDidMount() {
     const { fetchArticulos, fetchClientes } = this.props;
-
     fetchArticulos();
     fetchClientes();
   }
@@ -104,15 +110,16 @@ class ArticleForm extends Component {
 
 const mapStateToProps = state => {
   const { valuesArticulos, valuesClientes } = state.fields;
-
   return {
     valuesArticulos,
     valuesClientes
   };
 };
+
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({ ...fieldsActions }, dispatch);
 };
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps

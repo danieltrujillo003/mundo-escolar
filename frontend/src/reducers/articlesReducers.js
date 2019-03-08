@@ -7,10 +7,9 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case LIST_ARTICLES:
-      console.log("hey");
+      state.listaArticulos.push(action.payload);
       return {
-        ...state,
-        listaArticulos: action.payload
+        ...state
       };
     default:
       return state;

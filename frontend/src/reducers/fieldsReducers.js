@@ -1,17 +1,16 @@
 import {
   FETCH_ARTICULOS,
   FETCH_CLIENTES,
-  LIST_ARTICLES
+  ADD_TITLE
 } from "../actions/types";
 
 const initialState = {
   valuesClientes: [],
-  valuesArticulos: []
-  // listaArticulos: []
+  valuesArticulos: [],
+  actualCliente: ""
 };
 
 export default (state = initialState, action) => {
-  console.log(action);
   switch (action.type) {
     case FETCH_ARTICULOS:
       return {
@@ -23,12 +22,11 @@ export default (state = initialState, action) => {
         ...state,
         valuesClientes: action.payload
       };
-    // case LIST_ARTICLES:
-    //   console.log("hey");
-    //   return {
-    //     ...state,
-    //     listaArticulos: action.payload
-    //   };
+      case ADD_TITLE:
+      return {
+        ...state,
+        actualCliente: action.payload
+      };
     default:
       return state;
   }

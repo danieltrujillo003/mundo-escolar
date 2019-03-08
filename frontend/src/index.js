@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 // import "./style/sass/main.scss";
 import Dropdown from "./components/dropdown";
 import Table from "./components/table";
+import Total from "./components/total";
 import { rootReducer } from "./reducers";
 
 import { createStore, applyMiddleware, compose } from "redux";
@@ -30,6 +31,11 @@ class App extends Component {
       precio: 0
     };
     // this.handleSubmit = this.handleSubmit.bind(this);
+    this.getCliente = this.getCliente.bind(this);
+  }
+
+  getCliente() {
+    console.log(this.state.cliente)
   }
 
   // handleSubmit(e) {
@@ -81,9 +87,11 @@ class App extends Component {
         <h1>
           <a href="/">Artículos</a>
         </h1>
-          <Dropdown table="clientes" label="Cliente"/>
+          <Dropdown table="clientes" label="Cliente" clientName={this.getCLiente}/>
         <br />
-        <Table clientName={this.state.cliente} />
+        <Table clientName={this.getCLiente} />
+        <br />
+        <Total />
       </div>
     );
   }

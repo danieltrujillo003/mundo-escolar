@@ -1,5 +1,6 @@
 export const FETCH_CLIENTES = "FETCH_CLIENTES";
 export const FETCH_ARTICULOS = "FETCH_ARTICULOS";
 export const LIST_ARTICLES = "LIST_ARTICLES";
+export const ADD_TITLE = "ADD_TITLE";
 
 export const POST_NUEVO_PEDIDO = "POST_NUEVO_PEDIDO";

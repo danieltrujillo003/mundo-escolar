@@ -1,73 +1,72 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-
 class Table extends Component {
   constructor(props) {
     super(props);
     this.state = {
       articles: [],
-      // clientName: "",
-      deleted: ""
+      // deleted: "",
+      tableRows: ""
     };
-    // this.showArticles = this.showArticles.bind(this);
-    // this.deleteArticle = this.deleteArticle.bind(this);
+    this.clicked = this.clicked.bind(this);
   }
 
-  // showArticles() {
-  //   fetch("http://localhost:3000/articulos")
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       this.setState({ articles: data.info });
-  //     })
-  //     .catch(err => console.log(err));
-  // }
+  clicked() {
+    this.setState({ tableRows: "hey tablerows" });
+    {
+      console.log(this.state.tableRows);
+    }
+  }
 
-  // deleteArticle(index) {
-  //   console.log(index)
-  //   fetch(`http://localhost:3000/articulos/${index}`, { method: "DELETE" }).then(() => {
-  //     console.log("deleted")
-  //   });
-  // }
-
-  // componentWillMount() {
-  //   this.showArticles();
-  // }
+  componentDidUpdate() {
+    console.log("hey update");
+  }
 
   render() {
     return (
       <table>
         <thead>
           <tr>
-            <th colSpan="5">{this.props.clientName.toUpperCase()}</th>
+            <th colSpan="5">{this.props.actualCliente.toUpperCase()}</th>
           </tr>
           <tr>
             <th>Artículo</th>
             <th>Cantidad</th>
             <th>Precio unitario</th>
-            <th>Precio total</th>
+            <th>
+              <button onClick={this.clicked}>click</button>
+            </th>
             <th />
           </tr>
         </thead>
         <tbody>
-          {/* {this.props.articles.map((article, i) => (
+          {this.props.listaArticulos.map((article, i) => (
             <tr key={i}>
               <td>{article.articulo}</td>
               <td>{article.cantidad}</td>
+              <td>{article.precio}</td>
+              <td>{article.precio * article.cantidad}</td>
               <td>
-                <button onClick={() => this.deleteArticle(article.id)}>Eliminar</button>
+                <button>Eliminar</button>
               </td>
             </tr>
-          ))} */}
+          ))}
         </tbody>
       </table>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  articles: state.fields.listaArticulos
-});
+const mapStateToProps = state => {
+  const { listaArticulos } = state.articles;
+  const { valuesArticulos, actualCliente } = state.fields;
+  return {
+    listaArticulos,
+    valuesArticulos,
+    actualCliente
+  };
+};
 
 // const mapDispatchToProps = dispatch => {
 //   return bindActionCreators({ ...fieldsActions, addArticles }, dispatch);

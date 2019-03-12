@@ -2,16 +2,20 @@ import React, { Component } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-import * as fieldsActions from "../actions/fieldsActions";
+import {
+  fetchArticulos,
+  fetchClientes,
+  addArticles,
+  addTitle
+} from "../actions/fieldsActions";
 
-class ArticleForm extends Component {
+class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
       cliente: "",
       articulo: "",
-      cantidad: "",
-      counter: 0
+      cantidad: ""
     };
     // this.handleSubmit = this.handleSubmit.bind(this);
     this.handleArticleSubmit = this.handleArticleSubmit.bind(this);
@@ -30,7 +34,6 @@ class ArticleForm extends Component {
       precio
     };
     this.props.addArticles(nuevoArticulo);
-    this.setState({counter: this.state.counter + 1})
   }
 
   // handleSubmit(e) {
@@ -117,10 +120,13 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ ...fieldsActions }, dispatch);
+  return bindActionCreators(
+    { fetchArticulos, fetchClientes, addArticles, addTitle },
+    dispatch
+  );
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ArticleForm);
+)(Form);

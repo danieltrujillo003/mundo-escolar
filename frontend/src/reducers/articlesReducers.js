@@ -1,4 +1,4 @@
-import { LIST_ARTICLES } from "../actions/types";
+import { LIST_ARTICLES, DELETE_ARTICLE } from "../actions/types";
 
 const initialState = {
   listaArticulos: []
@@ -7,9 +7,17 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case LIST_ARTICLES:
-      state.listaArticulos.push(action.payload);
+      let listaArticulos = [...state.listaArticulos, action.payload];
       return {
-        ...state
+        ...state,
+        listaArticulos
+      };
+    case DELETE_ARTICLE:
+      let index = state.listaArticulos.indexOf(action.payload);
+      let listaReducida = [...state.listaArticulos.slice(0,index),...state.listaArticulos.slice(index+1)]
+      return {
+        ...state,
+        listaArticulos: listaReducida
       };
     default:
       return state;

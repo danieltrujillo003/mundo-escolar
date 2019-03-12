@@ -2,6 +2,7 @@ import {
   FETCH_ARTICULOS,
   FETCH_CLIENTES,
   LIST_ARTICLES,
+  DELETE_ARTICLE,
   ADD_TITLE
 } from "./types";
 
@@ -36,7 +37,12 @@ export const addArticles = nuevoArticulo => ({
   payload: nuevoArticulo
 });
 
-export const addTitle = (cliente) => ({
+export const deleteArticle = articulo => ({
+  type: DELETE_ARTICLE,
+  payload: articulo
+});
+
+export const addTitle = cliente => ({
   type: ADD_TITLE,
   payload: cliente
 });

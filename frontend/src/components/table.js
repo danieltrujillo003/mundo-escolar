@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { deleteArticle } from "../actions/fieldsActions";
 
 class Table extends Component {
   constructor(props) {
@@ -7,20 +9,20 @@ class Table extends Component {
     this.state = {
       articles: [],
       // deleted: "",
-      tableRows: ""
+      tableRows: "",
+      counter: 0,
+      total: 0
     };
-    this.clicked = this.clicked.bind(this);
+    this.getTotal = this.getTotal.bind(this);
   }
 
-  clicked() {
-    this.setState({ tableRows: "hey tablerows" });
-    {
-      console.log(this.state.tableRows);
+  getTotal() {
+    let artArray = this.props.listaArticulos;
+    let total = 0;
+    for (let art of artArray) {
+      total += art.precio * art.cantidad;
     }
-  }
-
-  componentDidUpdate() {
-    console.log("hey update");
+    this.setState({ total });
   }
 
   render() {
@@ -28,30 +30,42 @@ class Table extends Component {
       <table>
         <thead>
           <tr>
-            <th colSpan="5">{this.props.actualCliente.toUpperCase()}</th>
+            <th colSpan="5">
+              {!this.props.actualCliente
+                ? "Seleccione cliente"
+                : this.props.actualCliente.toUpperCase()}
+            </th>
           </tr>
           <tr>
             <th>Artículo</th>
             <th>Cantidad</th>
             <th>Precio unitario</th>
             <th>
-              <button onClick={this.clicked}>click</button>
+              <button onClick={this.getTotal}>click</button>
             </th>
             <th />
           </tr>
         </thead>
         <tbody>
-          {this.props.listaArticulos.map((article, i) => (
+          {this.props.listaArticulos.map((articulo, i) => (
             <tr key={i}>
-              <td>{article.articulo}</td>
-              <td>{article.cantidad}</td>
-              <td>{article.precio}</td>
-              <td>{article.precio * article.cantidad}</td>
+              <td>{articulo.articulo}</td>
+              <td>{articulo.cantidad}</td>
+              <td>{articulo.precio}</td>
+              <td>{articulo.precio * articulo.cantidad}</td>
               <td>
-                <button>Eliminar</button>
+                <button onClick={() => this.props.deleteArticle(articulo)}>
+                  Eliminar
+                </button>
               </td>
             </tr>
           ))}
+          <tr>
+            <td colSpan="3">
+              <strong>TOTAL</strong>
+            </td>
+            <td>{this.state.total}</td>
+          </tr>
         </tbody>
       </table>
     );
@@ -60,16 +74,18 @@ class Table extends Component {
 
 const mapStateToProps = state => {
   const { listaArticulos } = state.articles;
-  const { valuesArticulos, actualCliente } = state.fields;
+  const { actualCliente } = state.fields;
   return {
     listaArticulos,
-    valuesArticulos,
     actualCliente
   };
 };
 
-// const mapDispatchToProps = dispatch => {
-//   return bindActionCreators({ ...fieldsActions, addArticles }, dispatch);
-// };
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ deleteArticle }, dispatch);
+};
 
-export default connect(mapStateToProps)(Table);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Table);

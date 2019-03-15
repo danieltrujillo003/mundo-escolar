@@ -14,7 +14,10 @@ export default (state = initialState, action) => {
       };
     case DELETE_ARTICLE:
       let index = state.listaArticulos.indexOf(action.payload);
-      let listaReducida = [...state.listaArticulos.slice(0,index),...state.listaArticulos.slice(index+1)]
+      let listaReducida = [
+        ...state.listaArticulos.slice(0, index),
+        ...state.listaArticulos.slice(index + 1)
+      ];
       return {
         ...state,
         listaArticulos: listaReducida

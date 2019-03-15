@@ -79,8 +79,13 @@ class Form extends Component {
       <form onSubmit={this.handleArticleSubmit}>
         <div>
           <label htmlFor="cliente">Cliente:</label>
-          <select name="cliente" id="cliente" onChange={this.handleChange}>
-            <option>Seleccione...</option>
+          <select
+            name="cliente"
+            id="cliente"
+            onChange={this.handleChange}
+            required
+          >
+            <option value="">Seleccione...</option>
             {this.props.valuesClientes.map((content, i) => (
               <option key={i}>{content.main}</option>
             ))}
@@ -89,8 +94,13 @@ class Form extends Component {
         </div>
         <div>
           <label htmlFor="articulo">Artículo:</label>
-          <select name="articulo" id="articulo" onChange={this.handleChange}>
-            <option>Seleccione...</option>
+          <select
+            name="articulo"
+            id="articulo"
+            onChange={this.handleChange}
+            required
+          >
+            <option value="">Seleccione...</option>
             {this.props.valuesArticulos.map((content, i) => (
               <option key={i}>{content.main}</option>
             ))}
@@ -103,6 +113,7 @@ class Form extends Component {
           type="number"
           min="0"
           onChange={this.handleChange}
+          required
         />
         <br />
         <input type="submit" value="Agregar" />

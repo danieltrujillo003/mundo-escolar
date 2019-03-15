@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 // import "./style/sass/main.scss";
 import Form from "./components/form";
 import Table from "./components/table";
+import Submit from "./components/submit"
 import { rootReducer } from "./reducers";
 
 import { createStore, applyMiddleware, compose } from "redux";
@@ -36,6 +37,10 @@ class App extends Component {
           <Form />
           <Table />
         </main>
+        <br/>
+        <br/>
+        <br/>
+          <Submit />
       </div>
     );
   }
@@ -44,9 +49,9 @@ class App extends Component {
 const mainStyle = {
   display: "flex",
   justifyContent: "space-between",
-  marginLeft: "10vw",
-  marginRight: "10vw"
-}
+  marginLeft: "8vw",
+  marginRight: "8vw"
+};
 
 ReactDOM.render(
   <Provider store={store}>

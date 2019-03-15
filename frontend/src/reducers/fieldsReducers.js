@@ -1,8 +1,4 @@
-import {
-  FETCH_ARTICULOS,
-  FETCH_CLIENTES,
-  ADD_TITLE
-} from "../actions/types";
+import { FETCH_ARTICULOS, FETCH_CLIENTES, ADD_TITLE } from "../actions/types";
 
 const initialState = {
   valuesClientes: [],
@@ -22,7 +18,7 @@ export default (state = initialState, action) => {
         ...state,
         valuesClientes: action.payload
       };
-      case ADD_TITLE:
+    case ADD_TITLE:
       return {
         ...state,
         actualCliente: action.payload

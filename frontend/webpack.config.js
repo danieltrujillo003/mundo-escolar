@@ -1,9 +1,9 @@
 module.exports = {
-  entry: './src/index.js',
+  entry: "./src/index.js",
 
   output: {
     path: `${__dirname}/dist`,
-    filename: 'bundle.js',
+    filename: "bundle.js"
   },
 
   module: {
@@ -11,19 +11,19 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
         query: {
-          presets: ['@babel/preset-react', '@babel/preset-env'],
-        },
-      },
-      {
-        test: /\.(png|jpg|gif|svg|otf)$/,
-        loader: 'file-loader',
-      },
-      {
-        test: /\.scss$/,
-        loader: 'style-loader!css-loader!sass-loader',
-      },
-    ],
-  },
+          presets: ["@babel/preset-react", "@babel/preset-env"]
+        }
+      }
+      // {
+      //   test: /\.(png|jpg|gif|svg|otf)$/,
+      //   loader: "file-loader"
+      // },
+      // {
+      //   test: /\.scss$/,
+      //   loader: "style-loader!css-loader!sass-loader"
+      // }
+    ]
+  }
 };
